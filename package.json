@@ -1,6 +1,6 @@
 {
   "name": "abst-attention-kiosk",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "AB Split Test add-on: webcam attention testing for kiosks and signage",
   "license": "GPL-2.0-or-later",

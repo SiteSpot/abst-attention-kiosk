@@ -1,7 +1,12 @@
 === AB Split Test — Attention Kiosk ===
+Tags: ab testing, split testing, kiosk, digital signage, webcam
+Requires at least: 6.0
+Tested up to: 7.1
+Requires PHP: 7.0
 Requires plugins: AB Split Test
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Test which kiosk or signage screen actually gets looked at, using the device's webcam.
 
@@ -38,3 +43,13 @@ Visits are passers-by and conversions are passers-by who looked. A group standin
 
 * document event `abst-attention` with detail.type `arrive`, `conversion` (detail.seconds), `goal` (detail.goal, detail.seconds) or `leave` (detail.dwellMs, detail.attentionMs, detail.converted, detail.goals), e.g. to animate the screen when someone walks up.
 * Filters `abst_attention_vision_bundle_url`, `abst_attention_wasm_url`, `abst_attention_model_url` and `abst_attention_qr_library_url` to self-host MediaPipe and the QR library (offline kiosks), and `abst_attention_config` for the whole front-end config.
+
+== Changelog ==
+
+= 0.2.1 =
+* Standalone plugin, installable from a zip.
+* The settings page now confirms when settings are saved.
+* Deleting the plugin removes its settings.
+
+= 0.2.0 =
+* Separate conversion and sub goal times, "seconds looking" conversion value, QR code handoff to the visitor's phone.

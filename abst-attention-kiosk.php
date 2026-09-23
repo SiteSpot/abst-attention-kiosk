@@ -3,7 +3,7 @@
  * Plugin Name:       AB Split Test — Attention Kiosk
  * Plugin URI:        https://github.com/SiteSpot/abst-attention-kiosk
  * Description:       Add-on for AB Split Test. Runs tests on kiosk and signage screens using the device's webcam: passers-by are the visitors, people who look at the screen are the conversions. Face detection runs on the device; no images are stored or sent.
- * Version:           0.2.0
+ * Version:           0.2.1
  * Requires at least: 6.0
  * Requires PHP:      7.0
  * Author:            AB Split Test
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
-define( 'ABST_ATTENTION_VERSION', '0.2.0' );
+define( 'ABST_ATTENTION_VERSION', '0.2.1' );
 define( 'ABST_ATTENTION_OPTION', 'abst_attention_kiosk' );
 define( 'ABST_ATTENTION_MEDIAPIPE', '1.0.1' );
 
@@ -133,7 +133,8 @@ function abst_attention_enqueue() {
 // never from the link, so a made-up link can't pick a variation, and one for a
 // UUID that never visited adopts nothing.
 function abst_attention_handoff_lookup() {
-  $uuid = isset( $_GET['abst_scan'] ) ? strtolower( sanitize_text_field( wp_unslash( $_GET['abst_scan'] ) ) ) : '';
+  // A public link parameter for a read-only lookup, so there is no nonce to check.
+  $uuid = isset( $_GET['abst_scan'] ) ? strtolower( sanitize_text_field( wp_unslash( $_GET['abst_scan'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
   if ( ! preg_match( '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid ) || ! function_exists( 'abst_lookup_visitor_test_data' ) ) {
     return;
   }
@@ -294,13 +295,14 @@ function abst_attention_settings_page() {
   $field  = function ( $key, $label, $help, $attrs = '' ) use ( $s, $name ) {
     printf(
       '<tr><th scope="row"><label for="abst-att-%1$s">%2$s</label></th><td><input id="abst-att-%1$s" name="%3$s[%1$s]" value="%4$s" %5$s><p class="description">%6$s</p></td></tr>',
-      esc_attr( $key ), esc_html( $label ), esc_attr( $name ), esc_attr( $s[ $key ] ), $attrs, wp_kses_post( $help )
+      esc_attr( $key ), esc_html( $label ), esc_attr( $name ), esc_attr( $s[ $key ] ), $attrs, wp_kses_post( $help ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $attrs are fixed literals from this file.
     );
   };
   ?>
   <div class="wrap">
     <h1>Attention Kiosk</h1>
-    <?php if ( isset( $_GET['rotated'] ) ) : ?>
+    <?php settings_errors(); ?>
+    <?php if ( isset( $_GET['rotated'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display only. ?>
       <div class="notice notice-success"><p>New kiosk key created. Kiosks enrolled with the old key have stopped tracking until you enroll them again.</p></div>
     <?php endif; ?>
 
