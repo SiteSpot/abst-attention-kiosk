@@ -6,6 +6,14 @@ An add-on for the [AB Split Test](https://absplittest.com) WordPress plugin. Poi
 
 Face detection runs entirely in the kiosk's browser. No images or face data are stored or sent anywhere.
 
+## Why we built it
+
+We dogfood everything: AB Split Test runs on our own businesses' sites before it reaches anyone else's. One of them, [Whistler Bag Storage](https://whistlerbagstorage.com), has a TV facing out into a busy public area. It was showing a screen, but nobody could say whether anyone actually looked at it.
+
+So we pointed a webcam at the people walking past and asked a simple question: is this person looking at the screen, and for how long? That turned the TV into a split test. Different screens take turns, and the one that holds attention wins. It's the same way you'd test a landing page.
+
+The longer-term goal is to close the loop with AI: let an AI agent keep proposing new screen variations, test them on real passers-by, and keep whatever gets more people to scan the QR code. No human has to redesign the screen by hand.
+
 ## Good for
 
 - Retail and shop-window displays: which promo stops people?
